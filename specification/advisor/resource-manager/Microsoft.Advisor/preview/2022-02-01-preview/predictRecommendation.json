@@ -1,297 +1,672 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "2022-02-01-preview",
-    "title": "AdvisorManagementClient",
-    "description": "REST APIs for Azure Advisor"
+    "version": "2023-07-01",
+    "title": "KeyVaultManagementClient",
+    "description": "The Azure management API provides a RESTful set of web services that interact with Azure Key Vault."
   },
   "host": "management.azure.com",
   "schemes": [
     "https"
   ],
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
-  ],
   "paths": {
-    "/providers/Microsoft.Advisor/operations": {
-      "get": {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}": {
+      "put": {
         "tags": [
-          "Operations"
+          "Keys"
         ],
-        "description": "Lists all the available Advisor REST API operations.",
-        "operationId": "Operations_List",
+        "operationId": "Keys_CreateIfNotExist",
+        "description": "Creates the first version of a new key if it does not exist. If it already exists, then the existing key is returned without any write operations being performed. This API does not create subsequent versions, and does not update existing keys. Test a trivial change.",
         "parameters": [
           {
-            "$ref": "#/parameters/apiVersionParameter"
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group which contains the specified key vault."
+          },
+          {
+            "name": "vaultName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9-]{3,24}$",
+            "description": "The name of the key vault which contains the key to be created."
+          },
+          {
+            "name": "keyName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9-]{1,127}$",
+            "description": "The name of the key to be created. The value you provide may be copied globally for the purpose of running the service. The value provided should not include personally identifiable or sensitive information."
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "name": "parameters",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/KeyCreateParameters"
+            },
+            "description": "The parameters used to create the specified key."
           }
         ],
         "responses": {
           "200": {
-            "description": "OK. Successfully retrieved operation list. Trivial change for testing. Do not use trivial change. Another trivial change. Yet another trivial change.",
+            "description": "The created key.",
             "schema": {
-              "$ref": "#/definitions/OperationEntityListResult"
+              "$ref": "#/definitions/Key"
             }
           },
           "default": {
             "description": "Error response describing why the operation failed.",
             "schema": {
-              "$ref": "#/definitions/ArmErrorResponse"
+              "$ref": "common.json#/definitions/CloudError"
             }
           }
         },
-        "deprecated": false,
+        "x-ms-examples": {
+          "Create a key": {
+            "$ref": "./examples/createKey.json"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      },
+      "get": {
+        "tags": [
+          "Keys"
+        ],
+        "operationId": "Keys_Get",
+        "description": "Gets the current version of the specified key from the specified key vault.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group which contains the specified key vault."
+          },
+          {
+            "name": "vaultName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9-]{3,24}$",
+            "description": "The name of the vault which contains the key to be retrieved."
+          },
+          {
+            "name": "keyName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9-]{1,127}$",
+            "description": "The name of the key to be retrieved."
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The retrieved key.",
+            "schema": {
+              "$ref": "#/definitions/Key"
+            }
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "common.json#/definitions/CloudError"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Get a key": {
+            "$ref": "./examples/getKey.json"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys": {
+      "get": {
+        "tags": [
+          "Keys"
+        ],
+        "operationId": "Keys_List",
+        "description": "Lists the keys in the specified key vault.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group which contains the specified key vault."
+          },
+          {
+            "name": "vaultName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9-]{3,24}$",
+            "description": "The name of the vault which contains the keys to be retrieved."
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The retrieved page of keys.",
+            "schema": {
+              "$ref": "#/definitions/KeyListResult"
+            }
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "common.json#/definitions/CloudError"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "List keys in the vault": {
+            "$ref": "./examples/listKeys.json"
+          }
+        },
         "x-ms-pageable": {
           "nextLinkName": "nextLink"
         },
-        "x-ms-examples": {
-          "OperationsList": {
-            "$ref": "./examples/OperationsList.json"
-          }
-        }
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
       }
     },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/predict": {
-      "post": {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}/versions/{keyVersion}": {
+      "get": {
         "tags": [
-          "Prediction"
+          "Keys"
         ],
-        "summary": "Predicts a recommendation.",
-        "operationId": "Predict",
+        "operationId": "Keys_GetVersion",
+        "description": "Gets the specified version of the specified key in the specified key vault.",
         "parameters": [
           {
-            "$ref": "#/parameters/subscriptionIdParameter"
+            "$ref": "#/parameters/SubscriptionIdParameter"
           },
           {
-            "name": "predictionRequest",
-            "in": "body",
-            "description": "Parameters for predict recommendation.",
+            "name": "resourceGroupName",
+            "in": "path",
             "required": true,
-            "schema": {
-              "$ref": "#/definitions/PredictionRequest"
-            }
+            "type": "string",
+            "description": "The name of the resource group which contains the specified key vault."
           },
           {
-            "$ref": "#/parameters/apiVersionParameter"
+            "name": "vaultName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9-]{3,24}$",
+            "description": "The name of the vault which contains the key version to be retrieved."
+          },
+          {
+            "name": "keyName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9-]{1,127}$",
+            "description": "The name of the key version to be retrieved."
+          },
+          {
+            "name": "keyVersion",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{32}$",
+            "description": "The version of the key to be retrieved."
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK. Successfully obtained prediction.",
+            "description": "The retrieved key version.",
             "schema": {
-              "$ref": "#/definitions/PredictionResponse"
+              "$ref": "#/definitions/Key"
             }
           },
           "default": {
             "description": "Error response describing why the operation failed.",
             "schema": {
-              "$ref": "#/definitions/ArmErrorResponse"
+              "$ref": "common.json#/definitions/CloudError"
             }
           }
         },
-        "deprecated": false,
         "x-ms-examples": {
-          "Predict": {
-            "$ref": "./examples/Predict.json"
+          "Get a key version": {
+            "$ref": "./examples/getKeyVersion.json"
           }
-        }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}/versions": {
+      "get": {
+        "tags": [
+          "Keys"
+        ],
+        "operationId": "Keys_ListVersions",
+        "description": "Lists the versions of the specified key in the specified key vault.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group which contains the specified key vault."
+          },
+          {
+            "name": "vaultName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9-]{3,24}$",
+            "description": "The name of the vault which contains the key versions to be retrieved."
+          },
+          {
+            "name": "keyName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9-]{1,127}$",
+            "description": "The name of the key versions to be retrieved."
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The retrieved page of key versions.",
+            "schema": {
+              "$ref": "#/definitions/KeyListResult"
+            }
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "common.json#/definitions/CloudError"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "List key versions in the vault": {
+            "$ref": "./examples/listKeyVersions.json"
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        },
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
       }
     }
   },
   "definitions": {
-    "ArmErrorResponse": {
-      "type": "object",
+    "KeyProperties": {
       "properties": {
-        "error": {
-          "$ref": "#/definitions/ARMErrorResponseBody"
-        }
-      }
-    },
-    "ARMErrorResponseBody": {
-      "description": "ARM error response body.",
-      "type": "object",
-      "properties": {
-        "message": {
-          "description": "Gets or sets the string that describes the error in detail and provides debugging information.",
-          "type": "string"
+        "attributes": {
+          "$ref": "#/definitions/KeyAttributes",
+          "description": "The attributes of the key."
         },
-        "code": {
-          "description": "Gets or sets the string that can be used to programmatically identify the error.",
-          "type": "string"
-        }
-      }
-    },
-    "ShortDescription": {
-      "description": "A summary of the recommendation.",
-      "type": "object",
-      "properties": {
-        "solution": {
-          "description": "The remediation action suggested by the recommendation.",
-          "type": "string"
-        }
-      }
-    },
-    "OperationEntityListResult": {
-      "description": "The list of Advisor operations.",
-      "type": "object",
-      "properties": {
-        "nextLink": {
-          "description": "The link used to get the next page of operations.",
-          "type": "string"
+        "kty": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The type of the key. For valid values, see JsonWebKeyType.",
+          "enum": [
+            "EC",
+            "EC-HSM",
+            "RSA",
+            "RSA-HSM"
+          ],
+          "x-ms-enum": {
+            "name": "JsonWebKeyType",
+            "modelAsString": true
+          }
         },
-        "value": {
-          "description": "The list of operations.",
+        "keyOps": {
           "type": "array",
           "items": {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/definitions/Operation"
-          },
-          "x-ms-identifiers": [
-            "name"
-          ]
-        }
-      }
-    },
-    "PredictionRequest": {
-      "description": "Parameters for predict recommendation.",
-      "type": "object",
-      "properties": {
-        "properties": {
-          "$ref": "#/definitions/PredictionRequestProperties",
-          "description": "Request properties for prediction recommendation.",
-          "x-ms-client-flatten": true
-        }
-      }
-    },
-    "PredictionRequestProperties": {
-      "description": "Properties given for the predictor.",
-      "type": "object",
-      "properties": {
-        "predictionType": {
-          "description": "Type of the prediction.",
-          "enum": [
-            "PredictiveRightsizing"
-          ],
+            "type": "string",
+            "description": "The permitted JSON web key operations of the key. For more information, see JsonWebKeyOperation.",
+            "enum": [
+              "encrypt",
+              "decrypt",
+              "sign",
+              "verify",
+              "wrapKey",
+              "unwrapKey",
+              "import",
+              "release"
+            ],
+            "x-ms-enum": {
+              "name": "JsonWebKeyOperation",
+              "modelAsString": true
+            }
+          }
+        },
+        "keySize": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The key size in bits. For example: 2048, 3072, or 4096 for RSA."
+        },
+        "curveName": {
           "type": "string",
+          "description": "The elliptic curve name. For valid values, see JsonWebKeyCurveName.",
+          "enum": [
+            "P-256",
+            "P-384",
+            "P-521",
+            "P-256K"
+          ],
           "x-ms-enum": {
-            "name": "predictionType",
+            "name": "JsonWebKeyCurveName",
             "modelAsString": true
           }
         },
-        "extendedProperties": {
-          "description": "Extended properties are arguments specific for each prediction type.",
-          "type": "object"
-        }
-      }
-    },
-    "PredictionResponse": {
-      "description": "Response used by predictions.",
-      "type": "object",
-      "properties": {
-        "properties": {
-          "$ref": "#/definitions/PredictionResponseProperties",
-          "description": "The properties of the prediction.",
-          "x-ms-client-flatten": true
+        "keyUri": {
+          "type": "string",
+          "description": "The URI to retrieve the current version of the key.",
+          "readOnly": true
+        },
+        "keyUriWithVersion": {
+          "type": "string",
+          "description": "The URI to retrieve the specific version of the key.",
+          "readOnly": true
+        },
+        "rotationPolicy": {
+          "$ref": "#/definitions/RotationPolicy",
+          "description": "Key rotation policy in response. It will be used for both output and input. Omitted if empty"
+        },
+        "release_policy": {
+          "$ref": "#/definitions/KeyReleasePolicy",
+          "description": "Key release policy in response. It will be used for both output and input. Omitted if empty"
         }
       },
-      "x-ms-azure-resource": true
+      "description": "The properties of the key.",
+      "type": "object"
     },
-    "PredictionResponseProperties": {
-      "description": "Properties of the prediction",
-      "type": "object",
+    "KeyAttributes": {
       "properties": {
-        "extendedProperties": {
-          "description": "Extended properties",
-          "type": "object"
+        "enabled": {
+          "type": "boolean",
+          "description": "Determines whether or not the object is enabled."
         },
-        "predictionType": {
-          "description": "Type of the prediction.",
-          "enum": [
-            "PredictiveRightsizing"
-          ],
+        "nbf": {
+          "x-ms-client-name": "NotBefore",
+          "type": "integer",
+          "format": "int64",
+          "description": "Not before date in seconds since 1970-01-01T00:00:00Z."
+        },
+        "exp": {
+          "x-ms-client-name": "Expires",
+          "type": "integer",
+          "format": "int64",
+          "description": "Expiry date in seconds since 1970-01-01T00:00:00Z."
+        },
+        "created": {
+          "type": "integer",
+          "format": "int64",
+          "readOnly": true,
+          "description": "Creation time in seconds since 1970-01-01T00:00:00Z."
+        },
+        "updated": {
+          "type": "integer",
+          "format": "int64",
+          "readOnly": true,
+          "description": "Last updated time in seconds since 1970-01-01T00:00:00Z."
+        },
+        "recoveryLevel": {
           "type": "string",
-          "x-ms-enum": {
-            "name": "predictionType",
-            "modelAsString": true
-          }
-        },
-        "category": {
-          "description": "The category of the recommendation.",
+          "description": "The deletion recovery level currently in effect for the object. If it contains 'Purgeable', then the object can be permanently deleted by a privileged user; otherwise, only the system can purge the object at the end of the retention interval.",
           "enum": [
-            "HighAvailability",
-            "Security",
-            "Performance",
-            "Cost",
-            "OperationalExcellence"
+            "Purgeable",
+            "Recoverable+Purgeable",
+            "Recoverable",
+            "Recoverable+ProtectedSubscription"
           ],
-          "type": "string",
           "x-ms-enum": {
-            "name": "category",
+            "name": "DeletionRecoveryLevel",
             "modelAsString": true
-          }
+          },
+          "readOnly": true,
+          "x-nullable": false
         },
-        "impact": {
-          "description": "The business impact of the recommendation.",
-          "enum": [
-            "High",
-            "Medium",
-            "Low"
-          ],
-          "type": "string",
-          "x-ms-enum": {
-            "name": "impact",
-            "modelAsString": true
-          }
-        },
-        "impactedField": {
-          "description": "The resource type identified by Advisor.",
-          "type": "string"
-        },
-        "lastUpdated": {
-          "format": "date-time",
-          "description": "The most recent time that Advisor checked the validity of the recommendation.",
-          "type": "string"
-        },
-        "shortDescription": {
-          "$ref": "#/definitions/ShortDescription",
-          "description": "A summary of the recommendation."
+        "exportable": {
+          "type": "boolean",
+          "description": "Indicates if the private key can be exported.",
+          "default": false
         }
-      }
+      },
+      "description": "The object attributes managed by the Azure Key Vault service.",
+      "type": "object"
+    },
+    "KeyCreateParameters": {
+      "properties": {
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "The tags that will be assigned to the key."
+        },
+        "properties": {
+          "$ref": "#/definitions/KeyProperties",
+          "description": "The properties of the key to be created."
+        }
+      },
+      "description": "The parameters used to create a key.",
+      "required": [
+        "properties"
+      ],
+      "x-ms-azure-resource": true,
+      "type": "object"
+    },
+    "Key": {
+      "properties": {
+        "properties": {
+          "x-ms-client-flatten": true,
+          "$ref": "#/definitions/KeyProperties",
+          "description": "The properties of the key."
+        }
+      },
+      "required": [
+        "properties"
+      ],
+      "allOf": [
+        {
+          "$ref": "./keyvault.json#/definitions/Resource"
+        }
+      ],
+      "description": "The key resource.",
+      "type": "object"
+    },
+    "KeyListResult": {
+      "properties": {
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Key"
+          },
+          "description": "The key resources."
+        },
+        "nextLink": {
+          "type": "string",
+          "description": "The URL to get the next page of keys."
+        }
+      },
+      "description": "The page of keys.",
+      "type": "object"
+    },
+    "RotationPolicy": {
+      "properties": {
+        "attributes": {
+          "$ref": "#/definitions/KeyRotationPolicyAttributes",
+          "description": "The attributes of key rotation policy."
+        },
+        "lifetimeActions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LifetimeAction"
+          },
+          "x-ms-identifiers": [],
+          "description": "The lifetimeActions for key rotation action."
+        }
+      },
+      "type": "object"
+    },
+    "KeyRotationPolicyAttributes": {
+      "properties": {
+        "created": {
+          "type": "integer",
+          "format": "int64",
+          "readOnly": true,
+          "description": "Creation time in seconds since 1970-01-01T00:00:00Z."
+        },
+        "updated": {
+          "type": "integer",
+          "format": "int64",
+          "readOnly": true,
+          "description": "Last updated time in seconds since 1970-01-01T00:00:00Z."
+        },
+        "expiryTime": {
+          "type": "string",
+          "description": "The expiration time for the new key version. It should be in ISO8601 format. Eg: 'P90D', 'P1Y'."
+        }
+      },
+      "type": "object"
+    },
+    "LifetimeAction": {
+      "properties": {
+        "trigger": {
+          "$ref": "#/definitions/Trigger",
+          "description": "The trigger of key rotation policy lifetimeAction."
+        },
+        "action": {
+          "$ref": "#/definitions/Action",
+          "description": "The action of key rotation policy lifetimeAction."
+        }
+      },
+      "type": "object"
+    },
+    "Trigger": {
+      "properties": {
+        "timeAfterCreate": {
+          "type": "string",
+          "description": "The time duration after key creation to rotate the key. It only applies to rotate. It will be in ISO 8601 duration format. Eg: 'P90D', 'P1Y'."
+        },
+        "timeBeforeExpiry": {
+          "type": "string",
+          "description": "The time duration before key expiring to rotate or notify. It will be in ISO 8601 duration format. Eg: 'P90D', 'P1Y'."
+        }
+      },
+      "type": "object"
+    },
+    "Action": {
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "The type of action.",
+          "enum": [
+            "rotate",
+            "notify"
+          ],
+          "x-ms-enum": {
+            "name": "KeyRotationPolicyActionType",
+            "modelAsString": false
+          }
+        }
+      },
+      "type": "object"
+    },
+    "KeyReleasePolicy": {
+      "properties": {
+        "contentType": {
+          "description": "Content type and version of key release policy",
+          "type": "string",
+          "default": "application/json; charset=utf-8"
+        },
+        "data": {
+          "description": "Blob encoding the policy rules under which the key can be released.",
+          "type": "string",
+          "format": "base64url"
+        }
+      },
+      "type": "object"
     }
   },
   "parameters": {
-    "subscriptionIdParameter": {
+    "SubscriptionIdParameter": {
       "name": "subscriptionId",
       "in": "path",
-      "description": "The Azure subscription ID.",
       "required": true,
-      "type": "string"
+      "type": "string",
+      "description": "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
     },
-    "apiVersionParameter": {
+    "ApiVersionParameter": {
       "name": "api-version",
       "in": "query",
-      "description": "The version of the API to be used with the client request.",
       "required": true,
-      "type": "string"
+      "type": "string",
+      "description": "Client Api Version."
     }
   },
   "securityDefinitions": {
     "azure_auth": {
       "type": "oauth2",
-      "description": "Azure Active Directory OAuth2 Flow.",
-      "flow": "implicit",
       "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
+      "flow": "implicit",
+      "description": "Azure Active Directory OAuth2 Flow",
       "scopes": {
         "user_impersonation": "impersonate your user account"
       }
     }
-  },
-  "security": [
-    {
-      "azure_auth": [
-        "user_impersonation"
-      ]
-    }
-  ]
+  }
 }
