@@ -1,0 +1,24 @@
+name: Validated Impacted Specs
+
+on: pull_request
+
+jobs:
+  validate-impacted-specs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 2
+
+    - name: Setup CI environment
+      uses: ./.github/actions/setup-node-ci
+
+    - name: Validate Impacted Specs
+      run: |
+        ./eng/scripts/TypeSpec-Validation.ps1 -GitClean -Verbose
+        
+        # Effectively the same as ignoreLASTEXITCODE: true in Azure DevOps
+        exit 0
+      shell: pwsh
