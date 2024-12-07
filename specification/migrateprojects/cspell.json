@@ -1,0 +1,20 @@
+{
+  "version": "0.2",
+  "import": [
+    "../../cspell.json"
+  ],
+  "words": [
+    "Annotatable",
+    "autorest",
+    "Autorest",
+    "azuremigrate",
+    "Carbonite",
+    "Cloudamize",
+    "Corent",
+    "mgmt",
+    "migrateprojects",
+    "multiapi",
+    "Turbonomic",
+    "Zerto"
+  ]
+}

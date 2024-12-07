@@ -1,0 +1,28 @@
+{
+  "version": "0.2",
+  "import": [
+    "../../cspell.json"
+  ],
+  "words": [
+    "armconnectedcache",
+    "autorest",
+    "Autorest",
+    "connectedcache",
+    "createor",
+    "Createor",
+    "Customerspreview",
+    "Eflow",
+    "Gbps",
+    "Mbps",
+    "Mgmt",
+    "mgmt",
+    "Nodespreview",
+    "regen",
+    "resourcemanager",
+    "rpaas",
+    "rulesets",
+    "signup",
+    "Signup",
+    "typespec"
+  ]
+}
