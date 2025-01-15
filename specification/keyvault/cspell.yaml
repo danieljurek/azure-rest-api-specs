@@ -1,0 +1,40 @@
+# This file configures spell checking. Items in "words" were initially populated
+# with words that might be spelling errors. Review these words and take
+# appropriate action. For more information, see: https://aka.ms/ci-fix#spell-check
+
+# Spell checking is not case sensitive
+# Keep word lists in alphabetical so the file is easier to manage
+version: '0.2'
+import:
+  - ../../cspell.yaml
+words:
+  - assetid
+  - byok
+  - deletesas
+  - ekus
+  - getsas
+  - listsas
+  - mbaldwin
+  - mhsm
+  - mhsmip
+  - rsassa
+  - rsnull
+  - secg
+  - secp
+  - setsas
+  - upns
+overrides:
+  - filename: '**/specification/keyvault/data-plane/Microsoft.KeyVault/**/keyvault.json'
+    words:
+      - regenerte
+  - filename: '**/specification/keyvault/resource-manager/readme.go.md'
+    words:
+      - modelerfour
+  - filename: '**/specification/keyvault/data-plane/Microsoft.KeyVault/**/storage.json'
+    words:
+      - regenerte
+  - filename: >-
+      **/specification/keyvault/data-plane/Microsoft.KeyVault/stable/2016-10-01/keyvault.json
+    words:
+      - regenerte
+

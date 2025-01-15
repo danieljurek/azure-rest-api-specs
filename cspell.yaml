@@ -1,0 +1,56 @@
+version: '0.2'
+language: en
+flagWords:
+  - teh
+ignorePaths:
+  - '**/examples/**'
+  - '**/package-lock.json'
+  - cspell.json
+  - eng/**
+  - node_modules/**
+  - custom-words.txt
+  - cspell.yaml
+  - .github/CODEOWNERS*
+  - .github/policies/**
+ignoreRegExpList:
+  - v\d
+  - email
+  - Base64
+minWordLength: 4
+dictionaries:
+  - companies
+  - csharp
+  - custom-words
+  - go
+  - html
+  - java
+  - node
+  - python
+  - softwareTerms
+  - typescript
+enableFiletypes:
+  - cadl
+allowCompoundWords: true
+words:
+  - azext
+  - byos
+  - cadl
+  - contoso
+  - eastus
+  - entra
+  - fqdns
+  - hana
+  - kusto
+  - liftr
+  - localizable
+  - mbps
+  - mgmt
+  - odata
+  - onboarded
+  - payg
+  - regen
+  - rpaas
+  - skus
+  - vmss
+  - vnet
+  - westus
