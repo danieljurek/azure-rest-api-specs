@@ -1,0 +1,27 @@
+name: LintDiff
+
+on: pull_request
+
+permissions:
+  contents: read
+
+jobs:
+  lintdiff:
+    name: LintDiff
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout 'after' state
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          path: after
+
+      - name: Checkout 'before' state
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: before
+
+      - name: Say hi
+        run: echo "Hello, world!"
