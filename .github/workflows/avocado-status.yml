@@ -66,5 +66,5 @@ jobs:
               { github, context, core }, 
               "[TEST IGNORE] Swagger Avocado", 
               "[TEST-IGNORE] Swagger Avocado - Analyze Code", 
-              label.APPROVED_AVOCADO,
+              Label.APPROVED_AVOCADO,
             );
