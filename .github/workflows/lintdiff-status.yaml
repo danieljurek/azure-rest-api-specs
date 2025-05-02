@@ -66,5 +66,5 @@ jobs:
               { github, context, core }, 
               "[TEST IGNORE] Swagger LintDiff", 
               "[TEST-IGNORE] Swagger LintDiff - Analyze Code", 
-              label.APPROVED_LINT_DIFF
+              Label.APPROVED_LINT_DIFF
             );
