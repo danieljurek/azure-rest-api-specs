@@ -64,7 +64,7 @@ jobs:
                 await import('${{ github.workspace }}/.github/workflows/src/set-status.js');
             return await setStatus(
               { github, context, core }, 
-              "[TEST IGNORE] Swagger Avocado", 
+              "[TEST-IGNORE] Swagger Avocado", 
               "[TEST-IGNORE] Swagger Avocado - Analyze Code", 
               Label.APPROVED_AVOCADO,
             );
