@@ -64,7 +64,7 @@ jobs:
                 await import('${{ github.workspace }}/.github/workflows/src/set-status.js');
             return await setStatus(
               { github, context, core }, 
-              "[TEST-IGNORE] Swagger LintDiff", 
-              "[TEST-IGNORE] Swagger LintDiff - Analyze Code", 
+              "[TEST-IGNORE] Swagger LintDiff - Analyze Code",
+              "[TEST-IGNORE] Swagger LintDiff",
               Label.APPROVED_LINT_DIFF
             );
