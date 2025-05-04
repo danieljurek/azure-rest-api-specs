@@ -175,6 +175,8 @@ export async function setStatusImpl({
         ? CheckConclusion.SUCCESS
         : CheckConclusion.FAILURE;
 
+    core.info(`Setting status to '${state}' for '${wfName}'`);
+
     await github.rest.repos.createCommitStatus({
       owner,
       repo,
@@ -184,6 +186,8 @@ export async function setStatusImpl({
       target_url,
     });
   } else {
+    core.info(`No workflow runs found for '${wfName}'. Setting status to ${CommitStatusState.PENDING}.`);
+
     // Run was not found (not started), or not completed
     await github.rest.repos.createCommitStatus({
       owner,
