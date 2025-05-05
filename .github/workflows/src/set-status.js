@@ -87,7 +87,7 @@ export async function setStatusImpl({
   core.info(`Labels: ${overridingLabels}`);
 
   if (overridingLabels.includes(overridingLabel)) {
-    const description = `Found label '${overridingLabel}'`;
+    const description = `Found label overriding label: '${overridingLabel}'`;
     core.info(description);
 
     const state = CheckConclusion.SUCCESS;
@@ -189,7 +189,7 @@ export async function setStatusImpl({
       target_url,
     });
   } else {
-    core.info(`No workflow runs found for '${monitoredWorkflowName}'. Setting status to ${CommitStatusState.PENDING} for status: ${requiredStatusName}.`);
+    core.info(`No workflow runs found for '${monitoredWorkflowName}'. Setting status to ${CommitStatusState.PENDING} for required status: ${requiredStatusName}.`);
     // Run was not found (not started), or not completed
     await github.rest.repos.createCommitStatus({
       owner,
