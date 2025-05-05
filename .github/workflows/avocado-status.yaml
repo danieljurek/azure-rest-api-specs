@@ -28,7 +28,7 @@ permissions:
 jobs:
   avocado-status:
     name: Set Avocado Status
-    uses: ./.github/reusable/set-check-status.yml
+    uses: ./.github/workflows/_reusable-set-check-status.yml
     with:
       monitored_workflow_name: "[TEST-IGNORE] Swagger Avocado - Analyze Code"
       required_check_name: "[TEST-IGNORE] Swagger Avocado"
