@@ -28,7 +28,7 @@ permissions:
 jobs:
   lintdiff-status:
     name: Set LintDiff Status
-    uses: ./.github/reusable/set-check-status.yml
+    uses: ./.github/reusable/set-check-status.yml@main
     with:
       monitored_workflow_name: "[TEST-IGNORE] Swagger LintDiff - Analyze Code"
       required_check_name: "[TEST-IGNORE] Swagger LintDiff"
